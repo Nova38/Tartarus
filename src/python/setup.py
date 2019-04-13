@@ -8,6 +8,7 @@ setup(
     install_requires=[
         'Click',
         'colorama',
+        'hexrec',
     ],
 
     entry_points={

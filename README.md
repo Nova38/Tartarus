@@ -13,15 +13,16 @@ pip install .
 ## How to use
 
 ``` shell
-Usage: tartarus [OPTIONS] File
+Usage: tartarus [OPTIONS] INFILE
 
 Options:
-  -o TEXT     output file name
-  -t INTEGER  How many interations
+  -o, --outFile TEXT  output file name
+  -t INTEGER          How many interations
   --gzip
   --bzip2
   --lzma
   --zip
-  --all       Use all encretion and encoding methods above
-  --help      Show this message and exit.
+  --xxd
+  --all               Use all encretion and encoding methods above
+  --help              Show this message and exit.
   ```

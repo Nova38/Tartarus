@@ -7,18 +7,20 @@ import gzip
 import bz2
 import lzma
 import zipfile
+import hexrec.xxd
 
 
 @click.command()
-@click.argument('f', type=click.Path(exists=True, resolve_path=True))
-@click.option('-o', default="", help='output file name')
+@click.argument('inFile', type=click.Path(exists=True, resolve_path=True))
+@click.option('-o', '--outFile', default="", help='output file name')
 @click.option('-t', default=1, help='How many interations')
 @click.option('--gzip', "gz", is_flag=True, default=False)
 @click.option('--bzip2', "b2", is_flag=True, default=False)
 @click.option('--lzma', "lz", is_flag=True, default=False)
 @click.option('--zip', "zip", is_flag=True, default=False)
+@click.option('--xxd', "xxd", is_flag=True, default=False)
 @click.option('--all', is_flag=True, default=False, help="Use all encretion and encoding methods above")
-def cli(t, f, o, all, gz, b2, lz, zip):
+def cli(t, inFile, outFile, all, gz, b2, lz, zip, xxd):
     if (o == ""):
         o = os.path.join(os.path.dirname(f), "out")
     tmp = o + ".tmp"
@@ -34,9 +36,11 @@ def cli(t, f, o, all, gz, b2, lz, zip):
         options.append(Elzma)
     if (zip == True):
         options.append(Ezip)
+    if (xxd == True):
+        options.append(Exxd)
     if(len(options) == 0 or all == True):
         options.clear()
-        options = [Egzip, Ebzip2, Elzma, Ezip]
+        options = [Egzip, Ebzip2, Elzma, Ezip, Exxd]
     copyFile(f, o)
     # start the encode
 
@@ -77,3 +81,7 @@ def Ezip(fin, fout):
     myzip = zipfile.ZipFile(fout, 'w')
     myzip.write(fin)
     copyFile(fout, fin)
+
+
+def Exxd(fin, fout):
+    hexrec.xxd.xxd(fin, fout)
