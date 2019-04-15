@@ -35,20 +35,20 @@ def cli(t, file, output, all, gz, b2, lz, zip, xxd, b64):
     operationLog = []
 
     if (gz == True):
-        operations.append(Egzip)
+        operations.append(EGzip)
     if (b2 == True):
-        operations.append(Ebzip2)
+        operations.append(EBZip2)
     if (lz == True):
-        operations.append(Elzma)
+        operations.append(ELzma)
     if (zip == True):
-        operations.append(Ezip)
+        operations.append(EZip)
     if (xxd == True):
         operations.append(Exxd)
     if (b64 == True):
-        operations.append(Ebase64)
+        operations.append(EBase64)
     if(len(operations) == 0 or all == True):
         operations.clear()
-        operations = [Egzip, Ebzip2, Elzma, Ezip, Exxd, Ebase64]
+        operations = [EGzip, EBZip2, ELzma, EZip, Exxd, EBase64, EBase32]
     copyFile(file, output)
     # start the encode
 
@@ -79,7 +79,7 @@ def copyFile(fin, fout):
             shutil.copyfileobj(f_in, f_out)
 
 
-def Egzip(fin, fout):
+def EGzip(fin, fout):
     """
     Helper function to carry out Gunzip
 
@@ -92,7 +92,7 @@ def Egzip(fin, fout):
             shutil.copyfileobj(f_in, f_out)
 
 
-def Ebzip2(fin, fout):
+def EBZip2(fin, fout):
     """
     Helper function to carry out Bzip2
 
@@ -105,7 +105,7 @@ def Ebzip2(fin, fout):
             shutil.copyfileobj(f_in, f_out)
 
 
-def Elzma(fin, fout):
+def ELzma(fin, fout):
     """
     Helper function to carry out Lzma
 
@@ -118,7 +118,7 @@ def Elzma(fin, fout):
             shutil.copyfileobj(f_in, f_out)
 
 
-def Ezip(fin, fout):
+def EZip(fin, fout):
     """
     Helper function to carry out zip
 
@@ -142,7 +142,7 @@ def Exxd(fin, fout):
     hexrec.xxd.xxd(fin, fout)
 
 
-def Ebase64(fin, fout):
+def EBase64(fin, fout):
     """
     Helper function to carry out base64 encoding
 
@@ -153,3 +153,16 @@ def Ebase64(fin, fout):
     inFile = open(fin, 'rb').read()
     outFile = open(fout, 'wb')
     outFile.write(base64.b64encode(inFile))
+
+
+def EBase32(fin, fout):
+    """
+    Helper function to carry out base32 encoding
+
+    Args:
+        fin (path): Path of the input file
+        fout (path): Path for the out file
+    """
+    inFile = open(fin, 'rb').read()
+    outFile = open(fout, 'wb')
+    outFile.write(base64.b32encode(inFile))
