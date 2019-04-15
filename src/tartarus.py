@@ -18,11 +18,12 @@ import hexrec.xxd
 @click.option('--gzip', "gz", is_flag=True, default=False, help="Adds Gunzip to operations to be used on file")
 @click.option('--bzip2', "b2", is_flag=True, default=False, help="Adds Bzip2 to operations to be used on file")
 @click.option('--lzma', "lz", is_flag=True, default=False,  help="Adds lzma to operations to be used on file")
-@click.option('--zip', "zip", is_flag=True, default=False,  help="Adds Zip to operations to be used on file")
-@click.option('--xxd', "xxd", is_flag=True, default=False, help="Adds xxd (hexdump) to operations to be used on file")
-@click.option('--b64', "b64", is_flag=True, default=False, help="Adds base64 encoding to operations to be used on file")
+@click.option('--zip', "z", is_flag=True, default=False,  help="Adds Zip to operations to be used on file")
+@click.option('--xxd', "x", is_flag=True, default=False, help="Adds xxd (hexdump) to operations to be used on file")
+@click.option('--base64', "b64", is_flag=True, default=False, help="Adds base64 encoding to operations to be used on file")
+@click.option('--base32', "b32", is_flag=True, default=False, help="Adds base64 encoding to operations to be used on file")
 @click.option('--all', is_flag=True, default=False, help="Use all encretion and encoding methods above")
-def cli(t, file, output, all, gz, b2, lz, zip, xxd, b64):
+def cli(t, file, output, all, gz, b2, lz, z, x, b64, b32):
     """
     Takes an file and randomly encodes it for obfuscation
     """
@@ -34,18 +35,20 @@ def cli(t, file, output, all, gz, b2, lz, zip, xxd, b64):
     operations = []
     operationLog = []
 
-    if (gz == True):
+    if (gz):
         operations.append(EGzip)
-    if (b2 == True):
+    if (b2):
         operations.append(EBZip2)
-    if (lz == True):
+    if (lz):
         operations.append(ELzma)
-    if (zip == True):
+    if (z):
         operations.append(EZip)
-    if (xxd == True):
+    if (x):
         operations.append(Exxd)
-    if (b64 == True):
+    if (b64):
         operations.append(EBase64)
+    if (b32):
+        operations.append(EBase32)
     if(len(operations) == 0 or all == True):
         operations.clear()
         operations = [EGzip, EBZip2, ELzma, EZip, Exxd, EBase64, EBase32]
