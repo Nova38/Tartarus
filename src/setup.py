@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="tartarus",
-    version="0.2.2",
+    version="0.2.3",
     py_modules=['tartarus'],
     install_requires=[
         'Click',
